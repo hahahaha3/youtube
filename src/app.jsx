@@ -19,6 +19,9 @@ function App({youtube}) {
       .search(query)
       .then(videos => setVideos(videos));
   }, []);
+
+  // useCallback은 조심해서 사용해야함. 한번 만들면 메모리상에 계속 보관하기 때문에 메모리에 많은 영향이 갈 수 있음. 써야될때만 쓰는 것이 좋음
+  // 자식 컴포넌트에 props로 전달할 때 계속 새로운 콜백을 전달하면 자식 컴포넌트가 다시 re-render가 발생할 수 있으니까 그럴때 useCallback을 사용함
   
   useEffect(() => {
     youtube
