@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import styles from './app.module.css';
 import SearchHeader from './components/search_header/search_header';
 import VideoList from './components/video_list/video_list';
@@ -11,18 +11,20 @@ function App({youtube}) {
     setSelectedVideo(video);
   };
 
-  const search = query => { 
+  // 로딩스피너를 만들기
+  // 실패했다면 에러 state를 만들어서 보여주기
+  const search = useCallback(query => { 
     setSelectedVideo(null);
     youtube
       .search(query)
       .then(videos => setVideos(videos));
-  };
+  }, []);
   
   useEffect(() => {
     youtube
       .mostPopular()
       .then(videos => setVideos(videos));
-    }, []);
+    }, [youtube]);
   return (
     <div className={styles.app}>
     <SearchHeader onSearch={search}/>
